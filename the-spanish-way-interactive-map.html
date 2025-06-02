@@ -1,98 +1,148 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>The Spanish Way - Interactive Map</title>
-    <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    
-    <!-- Leaflet CSS -->
-    <link
-     rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    />
-    
-    <style>
-      #map {
-        height: 500px;
-        margin: 20px auto;
-        max-width: 900px;
-        border: 2px solid #00cc66;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
-        z-index: 1;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="animated-background"></div>
+<head>
+  <title>The Spanish Way - Interactive Map</title>
+  <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="style.css">
 
-    <header>
-      <h1>The Spanish Way - Interactive Map</h1>
-      <nav>
-        <br />
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
-          <li><a href="the-spanish-way-route.html">Route</a>
-            <ul class="dropdown">
-              <li><a href="the-spanish-way-cologne.html">> Cologne</a></li>
-              <li><a href="the-spanish-way-muster.html">> Munster</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </header>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <!-- Fullscreen plugin CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
 
-    <section>
-      <div class="content-container">
-        <div class="terminal-container">
-          <h2 class="terminal-title">Explore the Route</h2>
-          <p class="terminal-text">
-            This interactive map lets you explore key cities along The Spanish Way. Click on a marker to learn more about each location.
-          </p>
-          <div id="map"></div>
-        </div>
+  <style>
+    .animated-background {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(-45deg, #00ffcc, #6600ff, #ff0080, #00ffff);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: none;
+      position: relative;
+      font-family: Arial, sans-serif;
+    }
+
+    header, section, footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffcc;
+      text-shadow: 0 0 10px #00ffaa;
+    }
+
+    footer {
+      background-color: #000;
+      color: #00cc66;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-align: center;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      font-size: 13px;
+    }
+
+    #map {
+      height: 500px;
+      margin: 20px auto;
+      max-width: 900px;
+      border: 2px solid #00cc66;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-background"></div>
+
+  <header>
+    <h1>The Spanish Way - Interactive Map</h1>
+    <nav>
+      <br />
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="the-spanish-way-interactive-map.html">Interactive Map</a></li>
+        <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
+        <li><a href="the-spanish-way-route.html">Route</a>
+          <ul class="dropdown">
+            <li><a href="the-spanish-way-cologne.html">> Cologne</a></li>
+            <li><a href="the-spanish-way-muster.html">> Munster</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <section>
+    <div class="content-container">
+      <div class="terminal-container">
+        <h2 class="terminal-title">Explore the Route</h2>
+        <p class="terminal-text">
+          This interactive map lets you explore key cities along The Spanish Way. Click on a marker to learn more about each location.
+        </p>
+        <div id="map"></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer class="footer">
-      <p>&copy; 2025 The Spanish Way. All rights reserved. | Thank you for visiting!</p>
-    </footer>
+  <footer class="footer">
+    <p>&copy; 2025 The Spanish Way. All rights reserved. | Thank you for visiting!</p>
+  </footer>
 
-    <!-- Leaflet JS -->
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    ></script>
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Fullscreen plugin JS -->
+  <script src="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.js"></script>
 
-    <!-- Leaflet Map Script -->
-    <script>
-      const map = L.map('map').setView([51.4, 7.5], 7);
+  <script>
+    const map = L.map('map', {
+      fullscreenControl: true
+    }).setView([51.4, 7.5], 7);
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-      L.marker([50.941262, 6.957049])
-        .addTo(map)
-        .bindPopup('<a href="the-spanish-way-cologne.html">Cologne Cathedral</a>');
+    L.marker([50.941262, 6.957049])
+      .addTo(map)
+      .bindPopup('<a href="the-spanish-way-cologne.html">Cologne Cathedral</a>');
 
-      L.marker([51.9607, 7.6261])
-        .addTo(map)
-        .bindPopup('<a href="the-spanish-way-muster.html">Münster Old Town</a>');
+    L.marker([51.9607, 7.6261])
+      .addTo(map)
+      .bindPopup('<a href="the-spanish-way-muster.html">Münster Old Town</a>');
 
-      L.marker([51.407537, 7.249367])
-        .addTo(map)
-        .bindPopup('<a href="the-spanish-way-muster.html">Haus Kemnade/a>');
+    L.marker([51.407537, 7.249367])
+      .addTo(map)
+      .bindPopup('<a href="the-spanish-way-muster.html">Haus Kemnade</a>');
 
-      L.marker([51.550652, 7.361816])
-        .addTo(map)
-        .bindPopup('<a href="the-spanish-way-muster.html">Haus Bodelschwingh/a>');
+    L.marker([51.550652, 7.361816])
+      .addTo(map)
+      .bindPopup('<a href="the-spanish-way-muster.html">Haus Bodelschwingh</a>');
 
-       L.marker([51.776361, 7.442623])
-        .addTo(map)
-        .bindPopup('<a href="the-spanish-way-muster.html">Vischering Castle/a>');
-
-
-    </script>
-  </body>
+    L.marker([51.776361, 7.442623])
+      .addTo(map)
+      .bindPopup('<a href="the-spanish-way-muster.html">Vischering Castle</a>');
+  </script>
+</body>
 </html>
