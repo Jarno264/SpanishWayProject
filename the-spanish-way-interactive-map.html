@@ -4,12 +4,15 @@
     <title>The Spanish Way - Interactive Map</title>
     <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="style.css">
+    
+    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-o9N1j7kGStbOoZLrOS3E8h1hOoLh8bA8ZkYf2o1H6kM="
+      integrity="sha256-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44c="
       crossorigin=""
     />
+    
     <style>
       #map {
         height: 500px;
@@ -17,14 +20,14 @@
         max-width: 900px;
         border: 2px solid #00cc66;
         border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0,255,204,0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
         z-index: 1;
       }
     </style>
   </head>
   <body>
-    <div id="progressbar"></div>
-    <div id="scrollPath"></div>
+    <div class="animated-background"></div>
+
     <header>
       <h1>The Spanish Way - Interactive Map</h1>
       <nav>
@@ -58,22 +61,27 @@
       <p>&copy; 2025 The Spanish Way. All rights reserved. | Thank you for visiting!</p>
     </footer>
 
+    <!-- Leaflet JS -->
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-oDkGFfW20YqKcIAKfM9iZZ7tx1MIpRaoA6fMXyRkP0M="
+      integrity="sha256-o9N1j8MkP7+z6G8XxQ+XYeZQJpxvNc0FhgnbZQ+YZoM="
       crossorigin=""
     ></script>
+
+    <!-- Leaflet Map Script -->
     <script>
-      var map = L.map('map').setView([51.4, 7.5], 7); // Middle point between Cologne and Munster
+      const map = L.map('map').setView([51.4, 7.5], 7);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
 
-      L.marker([50.9375, 6.9603]).addTo(map) // Cologne
+      L.marker([50.9375, 6.9603])
+        .addTo(map)
         .bindPopup('<a href="the-spanish-way-cologne.html">Cologne Cathedral</a>');
 
-      L.marker([51.9607, 7.6261]).addTo(map) // Münster
+      L.marker([51.9607, 7.6261])
+        .addTo(map)
         .bindPopup('<a href="the-spanish-way-muster.html">Münster Old Town</a>');
     </script>
   </body>
