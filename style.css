@@ -166,14 +166,16 @@ a:hover {
 
 /* Footer styles*/
 footer {
-    background-color: #000;
-    color: #00cc66;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: center;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+   background-color: #000;
+   color: #00cc66;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   text-align: center;
+   position: fixed;        /* 👈 Changed from absolute to fixed */
+   bottom: 0;
+   width: 100%;
+   font-size: 13px;
+   z-index: 999;           /* 👈 Make sure it's on top of other elements */
 }
 
 /* Miscellaneous styles */
