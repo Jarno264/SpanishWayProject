@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Important -->
+
   <title>The Spanish Way - Interactive Map</title>
   <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
   <link rel="stylesheet" type="text/css" href="style.css">
@@ -30,7 +33,7 @@
       100% { background-position: 0% 50%; }
     }
 
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
@@ -50,8 +53,6 @@
       text-shadow: 0 0 10px #00ffaa;
     }
 
-
-
     #map {
       height: 500px;
       margin: 20px auto;
@@ -60,6 +61,16 @@
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
       z-index: 1;
+    }
+
+    /* Fullscreen support */
+    #map:fullscreen,
+    #map:-webkit-full-screen {
+      height: 100vh !important;
+      width: 100vw !important;
+      max-width: none;
+      margin: 0;
+      border-radius: 0;
     }
   </style>
 </head>
@@ -96,9 +107,7 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <p>&copy; 2025 The Spanish Way. All rights reserved. | Thank you for visiting!</p>
-  </footer>
+
 
   <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
