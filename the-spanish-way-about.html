@@ -1,58 +1,160 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>The Spanish Way - About</title>
-      <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
-      <link rel="stylesheet" type="text/css" href="style.css">
-   </head>
-   <body>
-      <header>
-         <h1>The Spanish Way - Main</h1>
-         <nav>
-            <br>
-            <ul>
-               <li><a href="index.html">Home</a></li>
-               <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
-               <li><a href="the-spanish-way-route.html">Route</a>
-                  <ul class="dropdown">
-                     <li><a href="the-spanish-way-cologne.html">> Cologne</a></li>
-                     <li><a href="the-spanish-way-muster.html">> Munster</a></li>
-                  </ul>
-               </li>
-            </ul>
-         </nav>
-      </header>
-      <section>
-         <div class="content-container">
-            <div class="terminal-container">
-               <center>
-               <img src="Files/Images/Spanishroad.png" alt="Marcel van Duijn - Game Developer and Digital Artist" class="about-image">
-               
-               <div>
-                <br>
-                  <h2 class="terminal-title">The Spanish Road:</h2>
-                  <p class="terminal-text">
-                    <br>
-                    The Spanish Road was a crucial military and logistical route used by the Spanish Empire in the 16th and 17th centuries to move troops and supplies from Spanish-controlled Milan in northern Italy to the Spanish Netherlands (modern-day Belgium), bypassing hostile France. This overland corridor passed through friendly or Habsburg-aligned territories like Savoy, Lorraine, and Franche-Comté, enabling Spain to reinforce its armies during conflicts such as the Eighty Years' War against the Dutch Revolt. Though not a single paved road, it was a network of paths, mountain passes, and supply points negotiated with or coerced from local rulers. The route symbolized Spain's effort to maintain control over its scattered European empire, but it gradually declined in importance as France grew more powerful, territorial control shifted, and Spain’s dominance waned in the second half of the 17th century. <br>
-                     
+<head>
+   <title>The Spanish Way - About</title>
+   <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <style>
+      /* 🎨 Animated gradient background */
+      .animated-background {
+         position: fixed;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         z-index: 0;
+         pointer-events: none;
+         background: linear-gradient(-45deg, #00ffcc, #6600ff, #ff0080, #00ffff);
+         background-size: 400% 400%;
+         animation: gradientShift 20s ease infinite;
+      }
 
-                     <br><br><br>
-                     <img src="Files/Images/Spanishroad.png" alt="Marcel van Duijn - Game Developer and Digital Artist" class="about-image">
-                     <br><br><br>
+      @keyframes gradientShift {
+         0% { background-position: 0% 50%; }
+         50% { background-position: 100% 50%; }
+         100% { background-position: 0% 50%; }
+      }
+
+      body, html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         background: none;
+         position: relative;
+      }
+      h1 {
+   text-align: center;
+   color: #00ffcc;
+   text-shadow: 0 0 10px #00ffaa;
+}
 
 
+      header, section, footer {
+         position: relative;
+         z-index: 1;
+      }
 
+      .homepage-container {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         padding: 40px 20px;
+         max-width: 100%;
+         box-shadow: none;
+         background: none;
+         border-radius: 0;
+      }
 
-                     
+      .homepage-title {
+         font-size: 40px;
+         font-weight: bold;
+         color: #00ffcc;
+         text-align: center;
+         text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffaa, 0 0 20px #00ffaa;
+         animation: titleGlow 3s ease-in-out infinite alternate;
+      }
 
-                    </p>
-                 </center>
-               </div>
-            </div>
+      .homepage-buttons {
+         margin-top: 20px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         gap: 30px;
+         max-width: 900px;
+      }
+
+      .about-image {
+         max-width: 100%;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+
+      .terminal-text {
+         color: #ccfff5;
+         font-size: 16px;
+         line-height: 1.6;
+         text-align: justify;
+         max-width: 900px;
+         padding: 20px;
+         background-color: rgba(0, 0, 0, 0.5);
+         border-radius: 10px;
+         box-shadow: 0 0 20px rgba(0,255,255,0.2);
+      }
+
+      .cta-button {
+         display: inline-block;
+         padding: 12px 24px;
+         background: rgba(0, 0, 0, 0.5);
+         color: #00ffcc;
+         text-decoration: none;
+         border: 2px solid #00ffcc;
+         border-radius: 8px;
+         font-family: 'Courier New', Courier, monospace;
+         font-size: 16px;
+         transition: all 0.3s ease;
+         box-shadow: 0 0 10px #00ffcc66;
+      }
+
+      .cta-button:hover {
+         background: #00ffcc;
+         color: #000;
+         box-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc88;
+         transform: translateY(-2px) scale(1.03);
+      }
+
+      footer {
+         text-align: center;
+         padding: 10px;
+         color: #00cc66;
+      }
+   </style>
+</head>
+<body>
+   <div class="animated-background"></div>
+
+   <header>
+      <h1>About The Spanish Way</h1>
+      <nav>
+         <br>
+         <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
+            <li><a href="the-spanish-way-route.html">Route</a>
+               <ul class="dropdown">
+                  <li><a href="the-spanish-way-cologne.html">> Cologne</a></li>
+                  <li><a href="the-spanish-way-muster.html">> Munster</a></li>
+               </ul>
+            </li>
+         </ul>
+      </nav>
+   </header>
+
+   <section id="home">
+      <div class="homepage-container">
+         <h1 class="homepage-title">About The Spanish Way</h1>
+         <div class="homepage-buttons">
+          
+            <p class="terminal-text">
+               The Spanish Road was a crucial military and logistical route used by the Spanish Empire in the 16th and 17th centuries to move troops and supplies from Spanish-controlled Milan in northern Italy to the Spanish Netherlands (modern-day Belgium), bypassing hostile France. This overland corridor passed through friendly or Habsburg-aligned territories like Savoy, Lorraine, and Franche-Comté, enabling Spain to reinforce its armies during conflicts such as the Eighty Years' War against the Dutch Revolt. Though not a single paved road, it was a network of paths, mountain passes, and supply points negotiated with or coerced from local rulers. The route symbolized Spain's effort to maintain control over its scattered European empire, but it gradually declined in importance as France grew more powerful, territorial control shifted, and Spain’s dominance waned in the second half of the 17th century.
+            </p>
+            <img src="Files/Images/Spanishroad.png" alt="Map of Spanish Road" class="about-image">
          </div>
-      </section>
-      <footer class="footer">
-         <p>&copy; 2025 The Spanish Way. All rights reserved.  Thank you for visiting!</p>
-      </footer>
-   </body>
+      </div>
+   </section>
+
+   <footer class="footer">
+      <p>&copy; 2025 The Spanish Way. All rights reserved. Thank you for visiting!</p>
+   </footer>
+</body>
 </html>

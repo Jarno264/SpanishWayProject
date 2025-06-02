@@ -1,55 +1,159 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <title>The Spanish Way - Route Options</title>
-      <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
-      <link rel="stylesheet" type="text/css" href="style.css">
-   </head>
-   <body>
-      <header>
-         <h1>The Spanish Way - Route</h1>
-         <nav>
-            <br>
-            <ul>
-               <li><a href="index.html">Home</a></li>
-               <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
-               <li><a href="the-spanish-way-route.html">Route</a>
-                  <ul class="dropdown">
-                     <li><a href="the-spanish-way-cologne.html">> Cologne</a></li>
-                     <li><a href="the-spanish-way-muster.html">> Munster</a></li>
-                  </ul>
-               </li>
-            </ul>
-         </nav>
-      </header>
-      <section>
-         <div class="content-container-selection">
-            <a href="the-spanish-way-cologne.html">
-               <div class="terminal-container-selection">
-                  <img src="Files/Capsules/Cologne.jpg" alt="Cologne Capsule" class="capsule-image-selection">
-                  <div>
-                     <h2 class="terminal-title">Cologne</h2>
-                     <p class="terminal-text">
-                        <br>
-                        Cologne is a vibrant city in western Germany, known for its stunning Gothic cathedral, the Kölner Dom, which dominates the skyline. Located on the Rhine River, it blends rich history with modern culture, offering world-class museums, a lively arts scene, and a strong local identity shaped by centuries of trade and tradition.
-                     </p>
-                  </div>
-               </div>
-            </a>
-         </div>
-         <div class="content-container-selection">
-            <a href="the-spanish-way-muster.html">
-               <div class="terminal-container-selection">
-                  <img src="Files/Capsules/Munster.jpg" alt="Muster Capsule" class="capsule-image-selection">
-                  <div>
-                     <h2 class="terminal-title">Münster</h2>
-                     <p class="terminal-text">
-                        <br>
-                        Münster is a historic city in western Germany, known for its charming old town, vibrant student population, and rich medieval heritage. It blends tradition with modern life, making it a dynamic and livable city with strong cultural and academic roots.
+<head>
+   <title>The Spanish Way - Route Options</title>
+   <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <style>
+      /* 🌈 Animated background */
+      .animated-background {
+         position: fixed;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         z-index: 0;
+         pointer-events: none;
+         background: linear-gradient(-45deg, #00ffcc, #6600ff, #ff0080, #00ffff);
+         background-size: 400% 400%;
+         animation: gradientShift 20s ease infinite;
+      }
 
-      </section>
-      <footer>
-         <p>&copy; 2025 The Spanish Way. All rights reserved. | Thank you for visiting!</p>
-      </footer>
-   </body>
+      @keyframes gradientShift {
+         0% { background-position: 0% 50%; }
+         50% { background-position: 100% 50%; }
+         100% { background-position: 0% 50%; }
+      }
+
+      body, html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         background: none;
+         position: relative;
+         font-family: Arial, sans-serif;
+      }
+
+      header, section, footer {
+         position: relative;
+         z-index: 1;
+      }
+
+      h1 {
+         text-align: center;
+         color: #00ffcc;
+         text-shadow: 0 0 10px #00ffaa;
+      }
+
+      .content-container-selection {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-wrap: wrap;
+         margin: 20px;
+      }
+
+      .terminal-container-selection {
+         background: rgba(0, 0, 0, 0.5);
+         padding: 20px;
+         margin: 20px;
+         border-radius: 12px;
+         box-shadow: 0 0 20px rgba(0,255,255,0.3);
+         max-width: 800px;
+         display: flex;
+         gap: 20px;
+         align-items: center;
+         transition: transform 0.3s ease;
+      }
+
+      .terminal-container-selection:hover {
+         transform: scale(1.02);
+         box-shadow: 0 0 30px rgba(0,255,255,0.5);
+      }
+
+      .capsule-image-selection {
+         width: 200px;
+         height: auto;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+
+      .terminal-title {
+         color: #00ffcc;
+         margin: 0;
+      }
+
+      .terminal-text {
+         color: #ccfff5;
+         margin-top: 10px;
+         max-width: 500px;
+      }
+
+footer {
+   background-color: #000;
+   color: #00cc66;
+   padding-top: 5px;
+   padding-bottom: 5px;
+   text-align: center;
+   position: absolute;
+   bottom: 0;
+   width: 100%;
+   font-size: 13px;
+}
+   </style>
+</head>
+<body>
+   <div class="animated-background"></div>
+
+   <header>
+      <h1>The Spanish Way - Route</h1>
+      <nav>
+         <br>
+         <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
+            <li><a href="the-spanish-way-route.html">Route</a>
+               <ul class="dropdown">
+                  <li><a href="the-spanish-way-cologne.html">> Cologne</a></li>
+                  <li><a href="the-spanish-way-muster.html">> Munster</a></li>
+               </ul>
+            </li>
+         </ul>
+      </nav>
+   </header>
+
+   <section>
+      <div class="content-container-selection">
+         <a href="the-spanish-way-cologne.html">
+            <div class="terminal-container-selection">
+               <img src="Files/Capsules/Cologne.jpg" alt="Cologne Capsule" class="capsule-image-selection">
+               <div>
+                  <h2 class="terminal-title">Cologne</h2>
+                  <p class="terminal-text">
+                     Cologne is a vibrant city in western Germany, known for its stunning Gothic cathedral, the Kölner Dom, which dominates the skyline. Located on the Rhine River, it blends rich history with modern culture, offering world-class museums, a lively arts scene, and a strong local identity shaped by centuries of trade and tradition.
+                  </p>
+               </div>
+            </div>
+         </a>
+      </div>
+
+      <div class="content-container-selection">
+         <a href="the-spanish-way-muster.html">
+            <div class="terminal-container-selection">
+               <img src="Files/Capsules/Munster.jpg" alt="Muster Capsule" class="capsule-image-selection">
+               <div>
+                  <h2 class="terminal-title">Münster</h2>
+                  <p class="terminal-text">
+                     Münster is a historic city in western Germany, known for its charming old town, vibrant student population, and rich medieval heritage. It blends tradition with modern life, making it a dynamic and livable city with strong cultural and academic roots.
+                  </p>
+               </div>
+            </div>
+         </a>
+      </div>
+   </section>
+
+   <footer>
+      <p>&copy; 2025 The Spanish Way. All rights reserved. | Thank you for visiting!</p>
+   </footer>
+</body>
 </html>

@@ -14,7 +14,7 @@ body {
 header {
     background-color: #000;
     color: #00ff00;
-    padding: 20px;
+    padding: 5px;
     font-family: 'Courier New', Courier, monospace;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
@@ -29,11 +29,16 @@ h1 {
 }
 
 /* Navigation styles */
+nav {
+  position: relative;
+  z-index: 10;
+}
 nav ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
+
 
 nav ul li {
   display: inline-block;
@@ -57,9 +62,11 @@ nav .dropdown {
   top: 100%;
   left: 0;
   padding: 0;
+  z-index: 1000;
 }
 
-nav li:hover .dropdown {
+nav li:hover > .dropdown,
+nav li .dropdown:hover {
   display: block;
 }
 
