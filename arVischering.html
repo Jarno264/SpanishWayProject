@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The Spanish Way - AR</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      background-color: #111;
+      color: #00cc66;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 20px;
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 80vh;
+      background-color: #000;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    }
+
+    a {
+      color: #00cc66;
+      text-decoration: underline;
+    }
+
+    .back {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cologne_cathedral AR Preview</h1>
+  <p>View a 3D model from Cologne in your space using AR (tap the cube icon on mobile).</p>
+
+  <model-viewer
+    src="Files/3Dmodels/CastleVischering.glb"
+    ios-src="Files/3Dmodels/Castlevischering.usdz"
+    ar
+    ar-modes="quick-look scene-viewer webxr"
+    camera-controls
+    autoplay
+    shadow-intensity="1"
+    environment-image="neutral"
+    alt="CologneC Cathedral">
+  </model-viewer>
+
+  <div class="back">
+    <a href="the-spanish-way-cologne.html">&larr; Back to Cologne Page</a>
+  </div>
+</body>
+</html>
