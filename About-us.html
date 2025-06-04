@@ -1,47 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>The Spanish Way - About</title>
+   <title>About us</title>
    <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
    <link rel="stylesheet" type="text/css" href="style.css">
    <style>
       
-  .animated-background {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    pointer-events: none;
+.animated-background {
+   position: fixed;
+   width: 100%;
+   height: 100%;
+   top: 0;
+   left: 0;
+   z-index: 0;
+   pointer-events: none;
+   background: linear-gradient(-45deg, #d2b48c, #a1865e, #704214, #e0c9a6, #5c4033);
+   background-size: 600% 600%;
+   animation: gradientShift 30s ease infinite;
+   filter: brightness(1) contrast(1.1);
+}
 
-    background-image: 
-      url('Files/Images/Paper.jpg')
-      linear-gradient(-45deg, #c2b280, #5c4033, #8b5a2b, #deb887);
-    background-size: cover, 400% 400%;
-    background-blend-mode: multiply;
-    animation: gradientShift 20s ease infinite;
-  }
+/* Keep the ripple effect */
+@keyframes gradientShift {
+   0%   { background-position: 0% 50%; }
+   50%  { background-position: 100% 50%; }
+   100% { background-position: 0% 50%; }
+}
 
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: none;
-    position: relative;
-  }
-
-  h1 {
-    text-align: center;
-    color: #00ffcc;
-    text-shadow: 0 0 10px #00ffaa;
-  }
+      body, html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         background: none;
+         position: relative;
+      }
+      h1 {
+   text-align: center;
+   color: #00ffcc;
+   text-shadow: 0 0 10px #00ffaa;
+}
 
 
       header, section, footer {
@@ -123,14 +120,15 @@
 </head>
 <body>
    <div class="animated-background"></div>
+   
 
    <header>
-      <h1>About The Spanish Way</h1>
+      <h1>About us</h1>
       <nav>
          <br>
          <ul>
             <li><a href="index.html">Home</a></li>
-              <li><a href="About-us.html">About us</a></li>
+            <li><a href="About-us.html">About us</a></li>
             <li><a href="the-spanish-way-interactive-map.html">Interactive Map</a></li>
             <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
             <li><a href="the-spanish-way-route.html">Route</a>
@@ -144,13 +142,20 @@
 
    <section id="home">
       <div class="homepage-container">
-         <h1 class="homepage-title">About The Spanish Way</h1>
+         <h1 class="homepage-title">About Us</h1>
          <div class="homepage-buttons">
           
             <p class="terminal-text">
-               The Spanish Road was a crucial military and logistical route used by the Spanish Empire in the 16th and 17th centuries to move troops and supplies from Spanish-controlled Milan in northern Italy to the Spanish Netherlands (modern-day Belgium), bypassing hostile France. This overland corridor passed through friendly or Habsburg-aligned territories like Savoy, Lorraine, and Franche-Comté, enabling Spain to reinforce its armies during conflicts such as the Eighty Years' War against the Dutch Revolt. Though not a single paved road, it was a network of paths, mountain passes, and supply points negotiated with or coerced from local rulers. The route symbolized Spain's effort to maintain control over its scattered European empire, but it gradually declined in importance as France grew more powerful, territorial control shifted, and Spain’s dominance waned in the second half of the 17th century.
+
+         We are a multidisciplinary team of dedicated students, each bringing unique skills and perspectives to the table. Our project was divided into three subgroups, each focused on a key element of the overall concept.
+
+         One group designed and created a pamphlet to effectively communicate our message. Another developed an interactive Augmented Reality (AR) experience to bring our concept to life in a modern and engaging way. The third group took on the physical and storytelling challenge—cycling the route themselves while capturing the journey in a compelling documentary.
+
+         By combining creativity, technology, and real-world action, we aimed to deliver a project that not only informs but also inspires.
+
+
             </p>
-            <img src="Files/Images/Pamflet.jpg" alt="Map of Spanish Road" class="about-image">
+            
             
          </div>
       </div>
