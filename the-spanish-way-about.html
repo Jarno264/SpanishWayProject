@@ -6,42 +6,37 @@
    <link rel="stylesheet" type="text/css" href="style.css">
    <style>
       
-  .animated-background {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    pointer-events: none;
+      .animated-background {
+         position: fixed;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         z-index: 0;
+         pointer-events: none;
+         background: linear-gradient(-45deg, #00ffcc, #6600ff, #ff0080, #00ffff);
+         background-size: 400% 400%;
+         animation: gradientShift 20s ease infinite;
+      }
 
-    background-image: 
-      url('Files/Images/Paper.jpg')
-      linear-gradient(-45deg, #c2b280, #5c4033, #8b5a2b, #deb887);
-    background-size: cover, 400% 400%;
-    background-blend-mode: multiply;
-    animation: gradientShift 20s ease infinite;
-  }
+      @keyframes gradientShift {
+         0% { background-position: 0% 50%; }
+         50% { background-position: 100% 50%; }
+         100% { background-position: 0% 50%; }
+      }
 
-  @keyframes gradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-
-  body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    background: none;
-    position: relative;
-  }
-
-  h1 {
-    text-align: center;
-    color: #00ffcc;
-    text-shadow: 0 0 10px #00ffaa;
-  }
+      body, html {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         background: none;
+         position: relative;
+      }
+      h1 {
+   text-align: center;
+   color: #00ffcc;
+   text-shadow: 0 0 10px #00ffaa;
+}
 
 
       header, section, footer {
@@ -130,12 +125,11 @@
          <br>
          <ul>
             <li><a href="index.html">Home</a></li>
-              <li><a href="About-us.html">About us</a></li>
+            <li><a href="About-us.html">About us</a></li>
             <li><a href="the-spanish-way-interactive-map.html">Interactive Map</a></li>
             <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
             <li><a href="the-spanish-way-route.html">Route</a>
              
-
                
             </li>
          </ul>
