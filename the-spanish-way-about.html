@@ -6,24 +6,28 @@
    <link rel="stylesheet" type="text/css" href="style.css">
    <style>
       
-      .animated-background {
-         position: fixed;
-         width: 100%;
-         height: 100%;
-         top: 0;
-         left: 0;
-         z-index: 0;
-         pointer-events: none;
-         background: linear-gradient(-45deg, #00ffcc, #6600ff, #ff0080, #00ffff);
-         background-size: 400% 400%;
-         animation: gradientShift 20s ease infinite;
-      }
+ .animated-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
 
-      @keyframes gradientShift {
-         0% { background-position: 0% 50%; }
-         50% { background-position: 100% 50%; }
-         100% { background-position: 0% 50%; }
-      }
+    background-image:
+      url('Files/Images/Paper3.jpg'),
+      linear-gradient(-45deg, #8B5E3C, #A67C52, #6E4B28, #B08B63);
+    background-size: cover, 400% 400%;
+    background-blend-mode: multiply;
+    animation: gradientShift 25s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
       body, html {
          margin: 0;
@@ -126,6 +130,7 @@
          <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="About-us.html">About us</a></li>
+            <li><a href="SpanishAR.html">Spanish AR</a></li>
             <li><a href="the-spanish-way-interactive-map.html">Interactive Map</a></li>
             <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
             <li><a href="the-spanish-way-route.html">Route</a>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>About us</title>
+   <link rel="icon" href="Files/Icons/WebsiteLogo.ico" type="image/x-icon">
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <style>
+      
+ .animated-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+
+    background-image:
+      url('Files/Images/Paper3.jpg'),
+      linear-gradient(-45deg, #8B5E3C, #A67C52, #6E4B28, #B08B63);
+    background-size: cover, 400% 400%;
+    background-blend-mode: multiply;
+    animation: gradientShift 25s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: none;
+    position: relative;
+  }
+      h1 {
+   text-align: center;
+   color: #00ffcc;
+   text-shadow: 0 0 10px #00ffaa;
+}
+
+
+      header, section, footer {
+         position: relative;
+         z-index: 1;
+      }
+
+      .homepage-container {
+         display: flex;
+         flex-direction: column;
+         justify-content: center;
+         align-items: center;
+         padding: 40px 20px;
+         max-width: 100%;
+         box-shadow: none;
+         background: none;
+         border-radius: 0;
+      }
+
+      .homepage-title {
+         font-size: 40px;
+         font-weight: bold;
+         color: #00ffcc;
+         text-align: center;
+         text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffaa, 0 0 20px #00ffaa;
+         animation: titleGlow 3s ease-in-out infinite alternate;
+      }
+
+      .homepage-buttons {
+         margin-top: 20px;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         gap: 30px;
+         max-width: 900px;
+      }
+
+      .about-image {
+         max-width: 100%;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      }
+
+      .terminal-text {
+         color: #ccfff5;
+         font-size: 16px;
+         line-height: 1.6;
+         text-align: justify;
+         max-width: 900px;
+         padding: 20px;
+         background-color: rgba(0, 0, 0, 0.5);
+         border-radius: 10px;
+         box-shadow: 0 0 20px rgba(0,255,255,0.2);
+      }
+
+      .cta-button {
+         display: inline-block;
+         padding: 12px 24px;
+         background: rgba(0, 0, 0, 0.5);
+         color: #00ffcc;
+         text-decoration: none;
+         border: 2px solid #00ffcc;
+         border-radius: 8px;
+         font-family: 'Courier New', Courier, monospace;
+         font-size: 16px;
+         transition: all 0.3s ease;
+         box-shadow: 0 0 10px #00ffcc66;
+      }
+
+      .cta-button:hover {
+         background: #00ffcc;
+         color: #000;
+         box-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc88;
+         transform: translateY(-2px) scale(1.03);
+      }
+
+
+   </style>
+</head>
+<body>
+   <div class="animated-background"></div>
+
+
+   <header>
+      <h1>About us</h1>
+      <nav>
+         <br>
+         <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="About-us.html">About us</a></li>
+            <li><a href="the-spanish-way-interactive-map.html">Interactive Map</a></li>
+            <li><a href="the-spanish-way-about.html">About The Spanish Way</a></li>
+            <li><a href="the-spanish-way-route.html">Route</a>
+             
+
+               
+            </li>
+         </ul>
+      </nav>
+   </header>
+
+   <section id="home">
+      <div class="homepage-container">
+         <h1 class="homepage-title">About Us</h1>
+         <div class="homepage-buttons">
+          
+            <p class="terminal-text">
+
+
+                <li><a href="arRapier.html">Spanish Rapier (AR)</a></li>
+                <li><a href="arCannon.html">Spanish Cannon (AR)</a></li>
+                <li><a href="arBergh.html">Castle Huis Bergh (AR)</a></li>
+            </p>
+            
+            
+         </div>
+      </div>
+   </section>
+
+  
+</body>
+</html>

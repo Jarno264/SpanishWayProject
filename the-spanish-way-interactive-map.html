@@ -14,24 +14,29 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
 
   <style>
-    .animated-background {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      z-index: 0;
-      pointer-events: none;
-      background: linear-gradient(-45deg, #00ffcc, #6600ff, #ff0080, #00ffff);
-      background-size: 400% 400%;
-      animation: gradientShift 20s ease infinite;
-    }
+ .animated-background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
 
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    background-image:
+      url('Files/Images/Paper3.jpg'),
+      linear-gradient(-45deg, #8B5E3C, #A67C52, #6E4B28, #B08B63);
+    background-size: cover, 400% 400%;
+    background-blend-mode: multiply;
+    animation: gradientShift 25s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
 
     html, body {
       margin: 0;
