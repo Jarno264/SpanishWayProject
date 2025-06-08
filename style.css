@@ -86,6 +86,30 @@ nav .dropdown li a:hover {
   background-color: #171616;
 }
 
+/* Container to align nav items and language switcher */
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Style the language switcher to match nav items */
+#languageSwitcher {
+  padding: 10px;
+  border: 1px solid #00cc66;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #00cc66;
+  cursor: pointer;
+  font-size: 1em;
+  appearance: none; /* Remove default styling (optional) */
+}
+
+/* Optional: Add arrow icon styling for appearance */
+#languageSwitcher::-ms-expand {
+  display: none;
+}
+
 /* Link styles */
 a {
     color: #56A78D;
