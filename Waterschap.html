@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RASCI & Flowchart</title>
+
+  <style>
+    :root{
+      --bg:#070a10;
+      --panel:#0f1622;
+      --panel2:#0b1220;
+      --text:#e6edf3;
+      --muted:#a8b3c2;
+      --line:#223046;
+
+      /* Required colors */
+      --A:#8b5cf6; /* Paars */
+      --R:#ef4444; /* Rood */
+      --S:#3b82f6; /* Blauw */
+      --C:#22c55e; /* Groen */
+      --I:#facc15; /* Geel */
+
+      --chip:#162033;
+      --chipOn:#223a60;
+
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 12% 10%, #16213a 0%, var(--bg) 60%);
+      color:var(--text);
+    }
+
+    /* Use more screen */
+    .wrap{
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 18px 14px 26px;
+    }
+
+    header{
+      display:flex;
+      gap:16px;
+      align-items:flex-end;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+
+    h1{font-size:22px;margin:0;}
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.35;
+      max-width: 900px;
+    }
+
+    .legend{
+      display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+      color:var(--muted);font-size:13px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border:1px solid var(--line);
+      border-radius:999px;background:rgba(255,255,255,0.03);
+    }
+    .dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
+    .dot.a{background:var(--A);}
+    .dot.r{background:var(--R);}
+    .dot.s{background:var(--S);}
+    .dot.c{background:var(--C);}
+    .dot.i{background:var(--I);}
+
+    .controls{
+      display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+      justify-content:space-between;margin:10px 0 12px;
+    }
+
+    .tabs{
+      display:flex;gap:8px;
+      background:rgba(255,255,255,0.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:6px;
+    }
+    .tab{
+      border:0;cursor:pointer;
+      padding:10px 14px;border-radius:12px;
+      background:transparent;color:var(--muted);
+      font-weight:800;font-size:13px;
+    }
+    .tab.active{
+      background:rgba(255,255,255,0.06);
+      color:var(--text);
+      box-shadow: var(--shadow);
+    }
+
+    .roles{
+      display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .roleBtn{
+      border:1px solid var(--line);
+      background:var(--chip);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+      transition: transform .06s ease, background .2s ease;
+      white-space:nowrap;
+    }
+    .roleBtn:hover{ transform: translateY(-1px); }
+    .roleBtn.active{ background:var(--chipOn); }
+
+    /* Bigger main area */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap:12px;
+      align-items:stretch;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      min-height: calc(100vh - 210px); /* make it fill screen nicely */
+    }
+    .cardHead{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(0,0,0,0.10);
+    }
+    .cardTitle{font-weight:900;font-size:14px;margin:0;}
+    .small{font-size:12px;color:var(--muted);}
+
+    .cardBody{padding:12px 14px 14px;height: calc(100% - 48px);}
+
+    /* Table */
+    .tableWrap{
+      height:100%;
+      overflow:auto;
+      border-radius:14px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:14px; /* bigger */
+    }
+    th, td{
+      border-right:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      padding:12px 10px;
+      vertical-align:middle;
+      background:rgba(0,0,0,0.08);
+    }
+    th{
+      position:sticky;top:0;z-index:2;
+      background:rgba(15,22,34,0.98);
+      color:var(--muted);
+      font-weight:900;
+      text-align:left;
+    }
+    tr td:first-child, tr th:first-child{ border-left:1px solid var(--line); }
+    tr:first-child th{ border-top:1px solid var(--line); }
+
+    td.task{
+      font-weight:800;
+      background:rgba(255,255,255,0.02);
+      min-width: 320px;
+    }
+
+    td.cell{
+      text-align:center;
+      font-weight:1000;
+      letter-spacing:.3px;
+      min-width: 120px;
+      position:relative;
+    }
+
+    /* Base letter coloring (always visible) */
+    td.cell.vA{ background: rgba(139,92,246,0.28); }
+    td.cell.vR{ background: rgba(239,68,68,0.28); }
+    td.cell.vS{ background: rgba(59,130,246,0.26); }
+    td.cell.vC{ background: rgba(34,197,94,0.22); }
+    td.cell.vI{ background: rgba(250,204,21,0.22); color:#111827; }
+
+    /* A/R combined (rare) */
+    td.cell.vAR{
+      background:
+        linear-gradient(135deg, rgba(139,92,246,0.32) 0 50%, rgba(239,68,68,0.32) 50% 100%);
+    }
+
+    /* Role filter effect: dim non-selected columns */
+    .dimCol{ opacity:0.28; filter:saturate(0.6); }
+    .activeCol{
+      opacity:1;
+      outline:2px solid rgba(255,255,255,0.10);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    /* Flowchart */
+    .flowWrap{
+      height:100%;
+      overflow:auto;
+      padding:2px;
+    }
+    .steps{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      padding: 6px 2px;
+    }
+    .step{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(0,0,0,0.10);
+      padding:12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      transition: transform .06s ease, background .2s ease, border-color .2s ease;
+    }
+    .step:hover{ transform: translateY(-1px); }
+    .stepTitle{
+      font-weight:900;
+      font-size:14px;
+      line-height:1.25;
+    }
+    .badge{
+      min-width:48px;
+      height:34px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:1000;
+      border:1px solid rgba(255,255,255,0.08);
+      background:rgba(255,255,255,0.03);
+      color:var(--muted);
+    }
+
+    /* Flowchart highlight colors by selected role letter */
+    .step.hlA{ background: rgba(139,92,246,0.22); border-color: rgba(139,92,246,0.45); }
+    .step.hlR{ background: rgba(239,68,68,0.20); border-color: rgba(239,68,68,0.45); }
+    .step.hlS{ background: rgba(59,130,246,0.18); border-color: rgba(59,130,246,0.42); }
+    .step.hlC{ background: rgba(34,197,94,0.16); border-color: rgba(34,197,94,0.40); }
+    .step.hlI{ background: rgba(250,204,21,0.16); border-color: rgba(250,204,21,0.45); color:#111827; }
+
+    /* AR combined */
+    .step.hlAR{
+      background: linear-gradient(135deg, rgba(139,92,246,0.22) 0 50%, rgba(239,68,68,0.20) 50% 100%);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    @media (max-width: 1050px){
+      .grid{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; align-items:flex-start; }
+      .legend{ justify-content:flex-start; }
+      .controls{ justify-content:flex-start; }
+      .roles{ justify-content:flex-start; }
+      .card{ min-height: 520px; }
+      td.task{ min-width: 260px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>RASCI & flowchart (per rol)</h1>
+        <p class="sub">
+          Kies <b>Ondertekenen</b> of <b>Verlengen / beëindigen</b>. Klik daarna een functieprofiel.
+          De RASCI-kolom voor die rol wordt uitgelicht, en de flowchart-stappen krijgen de bijbehorende kleur (A/R/S/C/I).
+        </p>
+      </div>
+
+      <div class="legend">
+        <span class="pill"><span class="dot a"></span> A</span>
+        <span class="pill"><span class="dot r"></span> R</span>
+        <span class="pill"><span class="dot s"></span> S</span>
+        <span class="pill"><span class="dot c"></span> C</span>
+        <span class="pill"><span class="dot i"></span> I</span>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div class="tabs" id="tabs"></div>
+      <div class="roles" id="roles"></div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="cardHead">
+          <div class="cardTitle">RASCI-matrix</div>
+          <div class="small" id="activeInfo">Geen rol geselecteerd</div>
+        </div>
+        <div class="cardBody">
+          <div class="tableWrap">
+            <table id="rasciTable"></table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="cardHead">
+          <div class="cardTitle">Flowchart (stappenoverzicht)</div>
+          <div class="small" id="flowInfo">Selecteer een rol om te highlighten</div>
+        </div>
+        <div class="cardBody">
+          <div class="flowWrap">
+            <div class="steps" id="steps"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const ROLES = [
+    "Contracteigenaar",
+    "Procesleider",
+    "Contractmanager",
+    "Inhoudsdeskundige",
+    "Beleidsadviseur contractmanagement",
+    "Beleidsadviseur inkoop",
+    "Administratief medewerker"
+  ];
+
+  const MODELS = [
+    {
+      key: "ondertekenen",
+      label: "Ondertekenen",
+      rows: [
+        { task: "Overeenkomst documenten finaliseren", rasci: ["A","R","C","S","C","R","S"] },
+        { task: "Inhoudelijke afstemming voorwaarden en afspraken", rasci: ["A","R","C","R","","C",""] },
+        { task: "Juridische toets / naleving aanbestedingsregels", rasci: ["A","C","","","C","R",""] },
+        { task: "Controle mandaat en tekenbevoegdheid", rasci: ["R","I","C","","C","I",""] },
+        { task: "Formele ondertekening overeenkomst", rasci: ["R","I","I","","I","I",""] },
+        { task: "Archivering in het contractmanagementsysteem", rasci: ["","A","C","","","","R"] },
+        { task: "Overdracht naar contractbeheer", rasci: ["","A","R","C","","","S"] }
+      ]
+    },
+    {
+      key: "verlengen",
+      label: "Verlengen / beëindigen",
+      rows: [
+        { task: "Monitoren contractlooptijd en opzegtermijnen", rasci: ["I","","A","","","",""] },
+        { task: "Controleren verlengings- en beëindigingsvoorwaarden", rasci: ["A","","R","","C","C","S"] },
+        { task: "Evalueren prestaties en actuele behoeftes", rasci: ["A","","R","R","","",""] },
+        { task: "Uitvoeren risicoanalyse (juridisch/operationeel)", rasci: ["A","","C","","R","C",""] },
+        { task: "Besluit verlengen of beëindigen", rasci: ["R","","C","C","I","I",""] },
+        { task: "Opstellen verlengings- of opzeggingbrief", rasci: ["A","","R","","C","C","S"] },
+        { task: "Controle mandaat en tekenbevoegdheid", rasci: ["I","","A","","C","I",""] },
+        { task: "Ondertekenen", rasci: ["A","","I","","I","S",""] },
+        { task: "Archivering in het contractmanagementsysteem", rasci: ["","","A/R","","I","","S"] },
+        { task: "Start nieuw inkooptraject (indien beëindiging)", rasci: ["A","R","C","","S","R",""] }
+      ]
+    }
+  ];
+
+  let activeModelKey = MODELS[0].key;
+  let activeRole = null;
+
+  const tabsEl = document.getElementById("tabs");
+  const rolesEl = document.getElementById("roles");
+  const tableEl = document.getElementById("rasciTable");
+  const activeInfoEl = document.getElementById("activeInfo");
+  const stepsEl = document.getElementById("steps");
+  const flowInfoEl = document.getElementById("flowInfo");
+
+  function buildTabs(){
+    tabsEl.innerHTML = "";
+    MODELS.forEach(m => {
+      const b = document.createElement("button");
+      b.className = "tab" + (m.key === activeModelKey ? " active" : "");
+      b.textContent = m.label;
+      b.addEventListener("click", () => {
+        activeModelKey = m.key;
+        // keep role selection (nicer UX)
+        buildTabs();
+        buildRoles();
+        renderAll();
+      });
+      tabsEl.appendChild(b);
+    });
+  }
+
+  function buildRoles(){
+    rolesEl.innerHTML = "";
+
+    const clear = document.createElement("button");
+    clear.className = "roleBtn" + (activeRole === null ? " active" : "");
+    clear.textContent = "Geen filter";
+    clear.addEventListener("click", () => {
+      activeRole = null;
+      buildRoles();
+      renderAll();
+    });
+    rolesEl.appendChild(clear);
+
+    ROLES.forEach(r => {
+      const b = document.createElement("button");
+      b.className = "roleBtn" + (r === activeRole ? " active" : "");
+      b.textContent = r;
+      b.addEventListener("click", () => {
+        activeRole = r;
+        buildRoles();
+        renderAll();
+      });
+      rolesEl.appendChild(b);
+    });
+  }
+
+  function renderAll(){
+    renderTable();
+    renderFlow();
+  }
+
+  function renderTable(){
+    const model = MODELS.find(m => m.key === activeModelKey);
+    activeInfoEl.textContent = activeRole ? `Filter: ${activeRole}` : "Geen rol geselecteerd";
+
+    let html = "<tr><th>Rol / taak</th>";
+    ROLES.forEach(r => html += `<th>${escapeHtml(r)}</th>`);
+    html += "</tr>";
+
+    model.rows.forEach(row => {
+      html += `<tr><td class="task">${escapeHtml(row.task)}</td>`;
+
+      row.rasci.forEach((val, idx) => {
+        const roleName = ROLES[idx];
+        const v = (val || "").toUpperCase();
+
+        // Base color class by letter
+        const vClass = valueToClass(v);
+
+        // Dim logic: if a role is selected, dim other columns
+        const colClass = activeRole
+          ? (roleName === activeRole ? "activeCol" : "dimCol")
+          : "";
+
+        html += `<td class="cell ${vClass} ${colClass}">${escapeHtml(val || "")}</td>`;
+      });
+
+      html += "</tr>";
+    });
+
+    tableEl.innerHTML = html;
+  }
+
+  function renderFlow(){
+    const model = MODELS.find(m => m.key === activeModelKey);
+
+    if(!activeRole){
+      flowInfoEl.textContent = "Selecteer een rol om stappen te highlighten";
+    } else {
+      flowInfoEl.textContent = `Stappen highlight: ${activeRole}`;
+    }
+
+    const roleIdx = activeRole ? ROLES.indexOf(activeRole) : -1;
+
+    stepsEl.innerHTML = "";
+    model.rows.forEach((row, i) => {
+      const step = document.createElement("div");
+      step.className = "step";
+
+      const title = document.createElement("div");
+      title.className = "stepTitle";
+      title.textContent = `${i+1}. ${row.task}`;
+
+      const badge = document.createElement("div");
+      badge.className = "badge";
+      badge.textContent = activeRole ? (row.rasci[roleIdx] || "") : "";
+
+      // Apply highlight color to step based on selected role value
+      if(activeRole){
+        const v = ((row.rasci[roleIdx] || "") + "").toUpperCase().trim();
+        const hl = flowHighlightClass(v);
+        if(hl) step.classList.add(hl);
+      }
+
+      step.appendChild(title);
+      step.appendChild(badge);
+      stepsEl.appendChild(step);
+    });
+  }
+
+  function valueToClass(v){
+    // v can be "", "A", "R", "C", "I", "S", or "A/R"
+    if(!v) return "";
+    const x = v.replace(/\s/g,"");
+    if(x === "A") return "vA";
+    if(x === "R") return "vR";
+    if(x === "S") return "vS";
+    if(x === "C") return "vC";
+    if(x === "I") return "vI";
+    if(x === "A/R" || x === "R/A") return "vAR";
+    return "";
+  }
+
+  function flowHighlightClass(v){
+    const x = v.replace(/\s/g,"");
+    if(!x) return "";
+    if(x === "A") return "hlA";
+    if(x === "R") return "hlR";
+    if(x === "S") return "hlS";
+    if(x === "C") return "hlC";
+    if(x === "I") return "hlI";
+    if(x === "A/R" || x === "R/A") return "hlAR";
+    return "";
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // init
+  buildTabs();
+  buildRoles();
+  renderAll();
+</script>
+</body>
+</html>
