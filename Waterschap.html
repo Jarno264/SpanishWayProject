@@ -35,7 +35,6 @@
       color:var(--text);
     }
 
-    /* Use more screen */
     .wrap{
       max-width: 1500px;
       margin: 0 auto;
@@ -56,7 +55,7 @@
       color:var(--muted);
       font-size:14px;
       line-height:1.35;
-      max-width: 900px;
+      max-width: 980px;
     }
 
     .legend{
@@ -76,8 +75,15 @@
     .dot.i{background:var(--I);}
 
     .controls{
-      display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+      display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start;
       justify-content:space-between;margin:10px 0 12px;
+    }
+
+    .leftControls{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
     }
 
     .tabs{
@@ -86,12 +92,13 @@
       border:1px solid var(--line);
       border-radius:14px;
       padding:6px;
+      height: fit-content;
     }
     .tab{
       border:0;cursor:pointer;
       padding:10px 14px;border-radius:12px;
       background:transparent;color:var(--muted);
-      font-weight:800;font-size:13px;
+      font-weight:900;font-size:13px;
     }
     .tab.active{
       background:rgba(255,255,255,0.06);
@@ -99,8 +106,57 @@
       box-shadow: var(--shadow);
     }
 
+    /* Yes/No question toggles */
+    .qBox{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      min-width: 290px;
+    }
+    .qTitle{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .toggle{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .toggleBtn{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,0.12);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:1000;
+      font-size:12px;
+      min-width:56px;
+      text-align:center;
+    }
+    .toggleBtn.onYes{
+      background: rgba(34,197,94,0.18);
+      border-color: rgba(34,197,94,0.45);
+    }
+    .toggleBtn.onNo{
+      background: rgba(239,68,68,0.14);
+      border-color: rgba(239,68,68,0.35);
+    }
+    .toggleHint{
+      font-size:12px;
+      color:var(--muted);
+    }
+
     .roles{
       display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+      align-items:flex-start;
     }
     .roleBtn{
       border:1px solid var(--line);
@@ -109,7 +165,7 @@
       padding:10px 12px;
       border-radius:14px;
       cursor:pointer;
-      font-weight:800;
+      font-weight:900;
       font-size:13px;
       transition: transform .06s ease, background .2s ease;
       white-space:nowrap;
@@ -117,7 +173,6 @@
     .roleBtn:hover{ transform: translateY(-1px); }
     .roleBtn.active{ background:var(--chipOn); }
 
-    /* Bigger main area */
     .grid{
       display:grid;
       grid-template-columns: 1.2fr 1fr;
@@ -131,7 +186,7 @@
       border-radius:18px;
       overflow:hidden;
       box-shadow: var(--shadow);
-      min-height: calc(100vh - 210px); /* make it fill screen nicely */
+      min-height: calc(100vh - 245px);
     }
     .cardHead{
       padding:12px 14px;
@@ -139,12 +194,11 @@
       display:flex;justify-content:space-between;align-items:center;
       background:rgba(0,0,0,0.10);
     }
-    .cardTitle{font-weight:900;font-size:14px;margin:0;}
+    .cardTitle{font-weight:950;font-size:14px;margin:0;}
     .small{font-size:12px;color:var(--muted);}
 
     .cardBody{padding:12px 14px 14px;height: calc(100% - 48px);}
 
-    /* Table */
     .tableWrap{
       height:100%;
       overflow:auto;
@@ -155,7 +209,7 @@
       width:100%;
       border-collapse:separate;
       border-spacing:0;
-      font-size:14px; /* bigger */
+      font-size:14px;
     }
     th, td{
       border-right:1px solid var(--line);
@@ -168,48 +222,46 @@
       position:sticky;top:0;z-index:2;
       background:rgba(15,22,34,0.98);
       color:var(--muted);
-      font-weight:900;
+      font-weight:950;
       text-align:left;
     }
     tr td:first-child, tr th:first-child{ border-left:1px solid var(--line); }
     tr:first-child th{ border-top:1px solid var(--line); }
 
     td.task{
-      font-weight:800;
+      font-weight:900;
       background:rgba(255,255,255,0.02);
       min-width: 320px;
     }
 
     td.cell{
       text-align:center;
-      font-weight:1000;
+      font-weight:1100;
       letter-spacing:.3px;
-      min-width: 120px;
+      min-width: 130px;
       position:relative;
     }
 
-    /* Base letter coloring (always visible) */
+    /* Base letter coloring */
     td.cell.vA{ background: rgba(139,92,246,0.28); }
     td.cell.vR{ background: rgba(239,68,68,0.28); }
     td.cell.vS{ background: rgba(59,130,246,0.26); }
     td.cell.vC{ background: rgba(34,197,94,0.22); }
     td.cell.vI{ background: rgba(250,204,21,0.22); color:#111827; }
-
-    /* A/R combined (rare) */
     td.cell.vAR{
       background:
         linear-gradient(135deg, rgba(139,92,246,0.32) 0 50%, rgba(239,68,68,0.32) 50% 100%);
     }
 
-    /* Role filter effect: dim non-selected columns */
-    .dimCol{ opacity:0.28; filter:saturate(0.6); }
+    /* Role filter effect */
+    .dimCol{ opacity:0.26; filter:saturate(0.55); }
     .activeCol{
       opacity:1;
       outline:2px solid rgba(255,255,255,0.10);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
     }
 
-    /* Flowchart */
+    /* Flowchart (vertical steps list) */
     .flowWrap{
       height:100%;
       overflow:auto;
@@ -234,18 +286,18 @@
     }
     .step:hover{ transform: translateY(-1px); }
     .stepTitle{
-      font-weight:900;
+      font-weight:950;
       font-size:14px;
       line-height:1.25;
     }
     .badge{
-      min-width:48px;
+      min-width:52px;
       height:34px;
       border-radius:12px;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-weight:1000;
+      font-weight:1100;
       border:1px solid rgba(255,255,255,0.08);
       background:rgba(255,255,255,0.03);
       color:var(--muted);
@@ -257,8 +309,6 @@
     .step.hlS{ background: rgba(59,130,246,0.18); border-color: rgba(59,130,246,0.42); }
     .step.hlC{ background: rgba(34,197,94,0.16); border-color: rgba(34,197,94,0.40); }
     .step.hlI{ background: rgba(250,204,21,0.16); border-color: rgba(250,204,21,0.45); color:#111827; }
-
-    /* AR combined */
     .step.hlAR{
       background: linear-gradient(135deg, rgba(139,92,246,0.22) 0 50%, rgba(239,68,68,0.20) 50% 100%);
       border-color: rgba(255,255,255,0.12);
@@ -270,8 +320,9 @@
       .legend{ justify-content:flex-start; }
       .controls{ justify-content:flex-start; }
       .roles{ justify-content:flex-start; }
-      .card{ min-height: 520px; }
+      .card{ min-height: 560px; }
       td.task{ min-width: 260px; }
+      .qBox{ min-width: 260px; }
     }
   </style>
 </head>
@@ -280,10 +331,9 @@
   <div class="wrap">
     <header>
       <div>
-        <h1>RASCI & flowchart (per rol)</h1>
+        <h1>RASCI & flowchart (prototype)</h1>
         <p class="sub">
-          Kies <b>Ondertekenen</b> of <b>Verlengen / beëindigen</b>. Klik daarna een functieprofiel.
-          De RASCI-kolom voor die rol wordt uitgelicht, en de flowchart-stappen krijgen de bijbehorende kleur (A/R/S/C/I).
+          Kies <b>Ondertekenen</b> of <b>Verlengen / beëindigen</b>, selecteer een rol en zie direct waar die rol A/R/S/C/I is.
         </p>
       </div>
 
@@ -297,7 +347,28 @@
     </header>
 
     <div class="controls">
-      <div class="tabs" id="tabs"></div>
+      <div class="leftControls">
+        <div class="tabs" id="tabs"></div>
+
+        <div class="qBox">
+          <div class="qTitle">Service Level Agreement aanwezig</div>
+          <div class="toggle" role="group" aria-label="SLA aanwezig">
+            <button class="toggleBtn" id="slaYes">Ja</button>
+            <button class="toggleBtn" id="slaNo">Nee</button>
+            <span class="toggleHint">Default: Nee</span>
+          </div>
+        </div>
+
+        <div class="qBox">
+          <div class="qTitle">Persoonsgegevens aanwezig</div>
+          <div class="toggle" role="group" aria-label="Persoonsgegevens aanwezig">
+            <button class="toggleBtn" id="pgYes">Ja</button>
+            <button class="toggleBtn" id="pgNo">Nee</button>
+            <span class="toggleHint">Default: Nee</span>
+          </div>
+        </div>
+      </div>
+
       <div class="roles" id="roles"></div>
     </div>
 
@@ -317,7 +388,7 @@
       <div class="card">
         <div class="cardHead">
           <div class="cardTitle">Flowchart (stappenoverzicht)</div>
-          <div class="small" id="flowInfo">Selecteer een rol om te highlighten</div>
+          <div class="small" id="flowInfo">Selecteer een rol om stappen te highlighten</div>
         </div>
         <div class="cardBody">
           <div class="flowWrap">
@@ -329,7 +400,8 @@
   </div>
 
 <script>
-  const ROLES = [
+  // --- Base roles ------------------------------------------------
+  const BASE_ROLES = [
     "Contracteigenaar",
     "Procesleider",
     "Contractmanager",
@@ -339,6 +411,10 @@
     "Administratief medewerker"
   ];
 
+  const EXTRA_ROLE_SLA = "IT-adviseur";
+  const EXTRA_ROLE_PG  = "Privacy Officer";
+
+  // --- Models (base rasci arrays correspond to BASE_ROLES order) -
   const MODELS = [
     {
       key: "ondertekenen",
@@ -371,9 +447,14 @@
     }
   ];
 
+  // --- State -----------------------------------------------------
   let activeModelKey = MODELS[0].key;
   let activeRole = null;
 
+  let slaYes = false; // default NO
+  let pgYes  = false; // default NO
+
+  // --- DOM -------------------------------------------------------
   const tabsEl = document.getElementById("tabs");
   const rolesEl = document.getElementById("roles");
   const tableEl = document.getElementById("rasciTable");
@@ -381,6 +462,39 @@
   const stepsEl = document.getElementById("steps");
   const flowInfoEl = document.getElementById("flowInfo");
 
+  const slaYesBtn = document.getElementById("slaYes");
+  const slaNoBtn  = document.getElementById("slaNo");
+  const pgYesBtn  = document.getElementById("pgYes");
+  const pgNoBtn   = document.getElementById("pgNo");
+
+  // --- Helpers ---------------------------------------------------
+  function currentRoles(){
+    const roles = [...BASE_ROLES];
+    if(slaYes) roles.push(EXTRA_ROLE_SLA);
+    if(pgYes) roles.push(EXTRA_ROLE_PG);
+    return roles;
+  }
+
+  function getModel(){
+    return MODELS.find(m => m.key === activeModelKey);
+  }
+
+  // Expand a base rasci row (length 7) to include extra roles (each "R" for every step if enabled)
+  function expandedRasciRow(baseRow){
+    const arr = [...baseRow];
+    if(slaYes) arr.push("R"); // test behavior
+    if(pgYes)  arr.push("R"); // test behavior
+    return arr;
+  }
+
+  function ensureActiveRoleValid(){
+    const roles = currentRoles();
+    if(activeRole && !roles.includes(activeRole)){
+      activeRole = null; // role removed by toggles
+    }
+  }
+
+  // --- UI build --------------------------------------------------
   function buildTabs(){
     tabsEl.innerHTML = "";
     MODELS.forEach(m => {
@@ -389,9 +503,7 @@
       b.textContent = m.label;
       b.addEventListener("click", () => {
         activeModelKey = m.key;
-        // keep role selection (nicer UX)
         buildTabs();
-        buildRoles();
         renderAll();
       });
       tabsEl.appendChild(b);
@@ -400,6 +512,7 @@
 
   function buildRoles(){
     rolesEl.innerHTML = "";
+    const roles = currentRoles();
 
     const clear = document.createElement("button");
     clear.className = "roleBtn" + (activeRole === null ? " active" : "");
@@ -411,7 +524,7 @@
     });
     rolesEl.appendChild(clear);
 
-    ROLES.forEach(r => {
+    roles.forEach(r => {
       const b = document.createElement("button");
       b.className = "roleBtn" + (r === activeRole ? " active" : "");
       b.textContent = r;
@@ -424,30 +537,44 @@
     });
   }
 
+  function updateToggleButtons(){
+    // SLA
+    slaYesBtn.classList.toggle("onYes", slaYes);
+    slaNoBtn.classList.toggle("onNo", !slaYes);
+    // PG
+    pgYesBtn.classList.toggle("onYes", pgYes);
+    pgNoBtn.classList.toggle("onNo", !pgYes);
+  }
+
   function renderAll(){
+    ensureActiveRoleValid();
+    buildRoles();
     renderTable();
     renderFlow();
   }
 
+  // --- Render table ---------------------------------------------
   function renderTable(){
-    const model = MODELS.find(m => m.key === activeModelKey);
+    const model = getModel();
+    const roles = currentRoles();
+
     activeInfoEl.textContent = activeRole ? `Filter: ${activeRole}` : "Geen rol geselecteerd";
 
     let html = "<tr><th>Rol / taak</th>";
-    ROLES.forEach(r => html += `<th>${escapeHtml(r)}</th>`);
+    roles.forEach(r => html += `<th>${escapeHtml(r)}</th>`);
     html += "</tr>";
 
     model.rows.forEach(row => {
+      const fullRow = expandedRasciRow(row.rasci);
+
       html += `<tr><td class="task">${escapeHtml(row.task)}</td>`;
 
-      row.rasci.forEach((val, idx) => {
-        const roleName = ROLES[idx];
+      fullRow.forEach((val, idx) => {
+        const roleName = roles[idx];
         const v = (val || "").toUpperCase();
 
-        // Base color class by letter
         const vClass = valueToClass(v);
 
-        // Dim logic: if a role is selected, dim other columns
         const colClass = activeRole
           ? (roleName === activeRole ? "activeCol" : "dimCol")
           : "";
@@ -461,8 +588,10 @@
     tableEl.innerHTML = html;
   }
 
+  // --- Render flow ----------------------------------------------
   function renderFlow(){
-    const model = MODELS.find(m => m.key === activeModelKey);
+    const model = getModel();
+    const roles = currentRoles();
 
     if(!activeRole){
       flowInfoEl.textContent = "Selecteer een rol om stappen te highlighten";
@@ -470,7 +599,7 @@
       flowInfoEl.textContent = `Stappen highlight: ${activeRole}`;
     }
 
-    const roleIdx = activeRole ? ROLES.indexOf(activeRole) : -1;
+    const roleIdx = activeRole ? roles.indexOf(activeRole) : -1;
 
     stepsEl.innerHTML = "";
     model.rows.forEach((row, i) => {
@@ -483,11 +612,14 @@
 
       const badge = document.createElement("div");
       badge.className = "badge";
-      badge.textContent = activeRole ? (row.rasci[roleIdx] || "") : "";
 
-      // Apply highlight color to step based on selected role value
+      // Expanded row includes extra R's
+      const fullRow = expandedRasciRow(row.rasci);
+
+      badge.textContent = activeRole ? (fullRow[roleIdx] || "") : "";
+
       if(activeRole){
-        const v = ((row.rasci[roleIdx] || "") + "").toUpperCase().trim();
+        const v = ((fullRow[roleIdx] || "") + "").toUpperCase().trim();
         const hl = flowHighlightClass(v);
         if(hl) step.classList.add(hl);
       }
@@ -498,8 +630,8 @@
     });
   }
 
+  // --- Classes ---------------------------------------------------
   function valueToClass(v){
-    // v can be "", "A", "R", "C", "I", "S", or "A/R"
     if(!v) return "";
     const x = v.replace(/\s/g,"");
     if(x === "A") return "vA";
@@ -532,9 +664,32 @@
       .replaceAll("'","&#039;");
   }
 
+  // --- Toggle logic (forced yes/no) ------------------------------
+  slaYesBtn.addEventListener("click", () => {
+    slaYes = true;
+    updateToggleButtons();
+    renderAll();
+  });
+  slaNoBtn.addEventListener("click", () => {
+    slaYes = false;
+    updateToggleButtons();
+    renderAll();
+  });
+
+  pgYesBtn.addEventListener("click", () => {
+    pgYes = true;
+    updateToggleButtons();
+    renderAll();
+  });
+  pgNoBtn.addEventListener("click", () => {
+    pgYes = false;
+    updateToggleButtons();
+    renderAll();
+  });
+
   // init
   buildTabs();
-  buildRoles();
+  updateToggleButtons();
   renderAll();
 </script>
 </body>
