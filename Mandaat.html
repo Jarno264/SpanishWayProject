@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mandaat – overzicht </title>
+
+  <style>
+    :root{
+      --bg:#070a10;
+      --panel:#0f1622;
+      --panel2:#0b1220;
+      --text:#e6edf3;
+      --muted:#a8b3c2;
+      --line:#223046;
+
+      --accent:#60a5fa;
+      --good:#22c55e;
+      --warn:#facc15;
+
+      --chip:#162033;
+      --chipOn:#223a60;
+
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 12% 10%, #16213a 0%, var(--bg) 60%);
+      color:var(--text);
+    }
+
+    .wrap{
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 18px 14px 26px;
+    }
+
+    header{
+      display:flex;
+      gap:16px;
+      align-items:flex-end;
+      justify-content:space-between;
+      margin-bottom:10px;
+    }
+
+    h1{font-size:22px;margin:0;}
+    .sub{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.35;
+      max-width: 980px;
+    }
+
+    .pillRow{
+      display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;
+      color:var(--muted);font-size:13px;
+    }
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border:1px solid var(--line);
+      border-radius:999px;background:rgba(255,255,255,0.03);
+    }
+    .dot{width:10px;height:10px;border-radius:3px;display:inline-block;background:var(--accent);}
+
+    /* Controls */
+    .controls{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin: 10px 0 12px;
+    }
+    .leftControls{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .box{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:rgba(255,255,255,0.03);
+      min-width: 290px;
+    }
+    .boxTitle{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    input, select{
+      border:1px solid var(--line);
+      background:rgba(0,0,0,0.18);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      outline:none;
+      font-weight:700;
+      font-size:13px;
+      min-width: 250px;
+    }
+    input::placeholder{ color: rgba(168,179,194,0.7); }
+
+    .btnRow{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .btn{
+      border:1px solid var(--line);
+      background:var(--chip);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:13px;
+      transition: transform .06s ease, background .2s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn.primary{ background: rgba(96,165,250,0.18); border-color: rgba(96,165,250,0.35); }
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    .cardHead{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;
+      background:rgba(0,0,0,0.10);
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .cardTitle{font-weight:950;font-size:14px;margin:0;}
+    .small{font-size:12px;color:var(--muted);}
+
+    .cardBody{padding:12px 14px 14px;}
+
+    /* Accordion teams */
+    details.team{
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+      background:rgba(0,0,0,0.10);
+      box-shadow: 0 6px 18px rgba(0,0,0,.20);
+      margin-bottom:10px;
+    }
+    details.team summary{
+      list-style:none;
+      cursor:pointer;
+      padding:12px 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      user-select:none;
+    }
+    details.team summary::-webkit-details-marker{ display:none; }
+    .teamLeft{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width: 280px;
+    }
+    .teamName{ font-weight:950; font-size:14px; }
+    .teamMeta{ font-size:12px; color:var(--muted); }
+
+    .teamRight{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center; justify-content:flex-end;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,0.03);
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+    }
+    .chip strong{ color: var(--text); font-weight:950; }
+
+    .teamInner{
+      border-top:1px solid var(--line);
+      padding:12px 12px 14px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .desc{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.4;
+      background:rgba(255,255,255,0.02);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+    }
+
+    /* Table */
+    .tableWrap{
+      overflow:auto;
+      border-radius:14px;
+    }
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      font-size:14px;
+      min-width: 520px;
+    }
+    th, td{
+      border-right:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      padding:12px 10px;
+      vertical-align:middle;
+      background:rgba(0,0,0,0.08);
+    }
+    th{
+      position:sticky; top:0; z-index:1;
+      background:rgba(15,22,34,0.98);
+      color:var(--muted);
+      font-weight:950;
+      text-align:left;
+    }
+    tr td:first-child, tr th:first-child{ border-left:1px solid var(--line); }
+    tr:first-child th{ border-top:1px solid var(--line); }
+    td.role{ font-weight:950; background:rgba(255,255,255,0.02); }
+    td.amount{ text-align:right; font-variant-numeric: tabular-nums; font-weight:950; }
+
+    .amountTag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .amountTag.good{ border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.10); }
+    .amountTag.warn{ border-color: rgba(250,204,21,0.35); background: rgba(250,204,21,0.10); }
+    .amountTag .mini{ width:10px; height:10px; border-radius:3px; background: var(--accent); }
+
+    .empty{
+      padding:14px;
+      border:1px dashed rgba(255,255,255,0.18);
+      border-radius:16px;
+      color:var(--muted);
+      background:rgba(255,255,255,0.02);
+      font-size:13px;
+    }
+
+    @media (max-width: 1050px){
+      header{ flex-direction:column; align-items:flex-start; }
+      .pillRow{ justify-content:flex-start; }
+      .controls{ justify-content:flex-start; }
+      .box{ min-width: 260px; }
+      input, select{ min-width: 220px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Mandaat-overzicht</h1>
+        <p class="sub">
+          Visueel overzicht van <b>mandatering</b> per team/rol (maximumbedragen).
+          <li><a href="Waterschap.html">RASCI & flowchart</a></li>
+        </p>
+      </div>
+
+      <div class="pillRow" id="statsPills"></div>
+    </header>
+
+    <div class="controls">
+      <div class="leftControls">
+        <div class="box">
+          <div class="boxTitle">Zoeken (team / rol)</div>
+          <input id="q" type="text" placeholder="Bijv. teamleider, informatiemanagement..." />
+        </div>
+
+        <div class="box">
+          <div class="boxTitle">Filter op team</div>
+          <select id="teamSelect"></select>
+        </div>
+
+        <div class="box">
+          <div class="boxTitle">Minimum bedrag (EUR)</div>
+          <input id="minAmount" type="number" min="0" step="1000" placeholder="Bijv. 50000" />
+          <div class="small">Laat leeg = geen filter</div>
+        </div>
+      </div>
+
+      <div class="btnRow">
+        <button class="btn primary" id="expandAll" type="button">Alles open</button>
+        <button class="btn" id="collapseAll" type="button">Alles dicht</button>
+        <button class="btn" id="reset" type="button">Reset</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="cardHead">
+          <div class="cardTitle">Teams & mandaat</div>
+          <div class="small" id="resultInfo"></div>
+        </div>
+        <div class="cardBody">
+          <div id="list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data (ingelezen uit mandaat.xlsx en hier "embedded")
+    const DATA = [
+  {
+    "team": "Bedrijfsvoering en Organisatie",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend.",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Strategisch beleidsadviseur P&O", "limit": 100000 },
+      { "role": "Senior beleidsadviseur financiën", "limit": 100000 },
+      { "role": "Controller", "limit": 100000 }
+    ]
+  },
+  {
+    "team": "Communicatie en Dienstverlening",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Beleidsadviseur communicatie", "limit": 100000 },
+      { "role": "Beleidsadviseur facilitair", "limit": 100000 },
+      { "role": "Medewerker Gebouwebeheer, facilitair en Senior bode", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Informatiemanagement",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Senior beleidsadviseur informatie voorziening", "limit": 100000 },
+      { "role": "Beleidsadviseur automatisering", "limit": 100000 },
+      { "role": "Beleidsadviseur informatie voorziening", "limit": 50000 },
+      { "role": "Projectleider ICT", "limit": 50000 },
+      { "role": "Beleids medewerker informatie management", "limit": 5000 },
+      { "role": "Beleids medewerker kwaliteit", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Documentaire Informatievoorziening",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Senior medewerker DIV", "limit": 100000 }
+    ]
+  },
+  {
+    "team": "Juridische Zaken",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 }
+    ]
+  },
+  {
+    "team": "Plannen en Projecten",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Senior adviseur planvorming / Strategisch adviseur / Adviseur", "limit": 100000 },
+      { "role": "Projectleider", "limit": 50000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Bestuursadvies en strategie",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Concernstrateeg", "limit": 100000 },
+      { "role": "Strategisch adviseur", "limit": 100000 },
+      { "role": "Strategisch adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Handhaving",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Juridisch adviseur / Senior adviseur / Adviseur handhaving", "limit": 100000 },
+      { "role": "Toezichthouder / Beleidsmedewerker", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Vergunningen",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Senior adviseur / Adviseur vergunningen", "limit": 100000 },
+      { "role": "Adviseur vergunningen", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Programma landelijk gebied",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Programmamanager / Projectmanager", "limit": 100000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Programma Waterveiligheid",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Programmamanager / Projectmanager", "limit": 100000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Programma Wonen en zuiveren",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreet tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Programmamanager / Projectmanager", "limit": 100000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Veranderprogramma energietransitie",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Programmamanager / Projectmanager", "limit": 100000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Veranderprogramma circulaire economie",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Programmamanager / Projectmanager", "limit": 100000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Beheer waterketen en onderhoud technische installaties",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Teamleider / Technisch manager beheer", "limit": 100000 },
+      { "role": "Werkvoorbereider / Adviseur / Procesoperator", "limit": 50000 },
+      { "role": "Toezichthouder / Meewerkend voorman", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Beheer Watersysteem",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Teamleider / Technisch manager beheer / GIS specialist / Specialist peilbeheer en besturingstechniek", "limit": 100000 },
+      { "role": "Beleidsadviseur / Werkvoorbereider / Adviseur / Procesoperator", "limit": 50000 },
+      { "role": "Toezichthouder / Meewerkend voorman", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Centrale Regie",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Operationeel manager / Coördinator / Projectleider", "limit": 100000 },
+      { "role": "Regisseur / Senior adviseur / Adviseur", "limit": 50000 },
+      { "role": "Beleidsondersteunend medewerker / Medewerker", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Bedrijfsbureau",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Coördinator / Senior adviseur / Adviseur / Werkvoorbereider", "limit": 100000 },
+      { "role": "Projectleider / Adviseur / Werkvoorbereider", "limit": 50000 },
+      { "role": "Medewerker / Beleidsondersteunend medewerker", "limit": 5000 }
+    ]
+  },
+  {
+    "team": "Data & Gegevensbeheer",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Coördinator / Senior adviseur / Adviseur", "limit": 100000 },
+      { "role": "Projectleider / Adviseur", "limit": 50000 }
+    ]
+  },
+  {
+    "team": "Beleid & Advies Waterbeheer",
+    "description": "Ten aanzien van overeenkomsten inclusief verwerkersovereenkomsten en aanbestedingen het aangaan van overeenkomsten, de eventueel bijbehorende verwerkersovereenkomst en aanbesteden van leveringen, diensten en werken en de daarmee samenhangende besluitvorming voor zover het het team betreft tot een maximum bedrag van, zie kolommen, voor zover er krediet is verleend",
+    "items": [
+      { "role": "Teamleider", "limit": 200000 },
+      { "role": "Technisch manager beheer / Gebiedsbeheerder / Installatiebeheerder / Projectbegeleider / Projectbegeleider onderhoud", "limit": 100000 },
+      { "role": "Beleidsadviseur onderhoud / Beleidsadviseur waterketen", "limit": 50000 },
+      { "role": "Specialist peilbeheer en besturingstechniek / Specialist onderhoud / GIS specialist", "limit": 50000 },
+      { "role": "Beleidsmedewerker watersystemen en -keringen / Beleidsmedewerker discrepantie / Beleidsondersteunend medewerker", "limit": 50000 }
+    ]
+  }
+];
+
+
+    // DOM
+    const qEl = document.getElementById("q");
+    const teamSelectEl = document.getElementById("teamSelect");
+    const minAmountEl = document.getElementById("minAmount");
+    const listEl = document.getElementById("list");
+    const resultInfoEl = document.getElementById("resultInfo");
+    const statsPillsEl = document.getElementById("statsPills");
+
+    const expandAllBtn = document.getElementById("expandAll");
+    const collapseAllBtn = document.getElementById("collapseAll");
+    const resetBtn = document.getElementById("reset");
+
+    // Helpers
+    function eur(x){
+      const n = Number(x || 0);
+      return n.toLocaleString("nl-NL", { style:"currency", currency:"EUR", maximumFractionDigits:0 });
+    }
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function maxLimit(team){
+      if(!team.items || !team.items.length) return 0;
+      return Math.max(...team.items.map(x => Number(x.limit||0)));
+    }
+    function countRoles(team){
+      return (team.items || []).length;
+    }
+    function tagClass(amount){
+      const v = Number(amount||0);
+      if(v >= 100000) return "good";
+      if(v >= 50000) return "warn";
+      return "";
+    }
+
+    function buildTeamSelect(){
+      const teams = ["Alle teams", ...DATA.map(d => d.team)];
+      teamSelectEl.innerHTML = teams
+        .map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`)
+        .join("");
+    }
+
+    function buildStats(){
+      const teams = DATA.length;
+      const rolesTotal = DATA.reduce((acc,t)=>acc+countRoles(t),0);
+      const globalMax = Math.max(...DATA.map(maxLimit));
+      statsPillsEl.innerHTML = `
+        <span class="pill"><span class="dot"></span> Teams: <b>${teams}</b></span>
+        <span class="pill"><span class="dot"></span> Rollen (totaal): <b>${rolesTotal}</b></span>
+        <span class="pill"><span class="dot"></span> Hoogste mandaat: <b>${eur(globalMax)}</b></span>
+      `;
+    }
+
+    function getFilters(){
+      const q = (qEl.value || "").trim().toLowerCase();
+      const team = teamSelectEl.value || "Alle teams";
+      const minAmount = minAmountEl.value === "" ? null : Number(minAmountEl.value || 0);
+      return { q, team, minAmount };
+    }
+
+    function teamMatches(teamObj, {q, team, minAmount}){
+      if(team !== "Alle teams" && teamObj.team !== team) return false;
+
+      if(minAmount !== null){
+        const anyOk = (teamObj.items || []).some(it => Number(it.limit||0) >= minAmount);
+        if(!anyOk) return false;
+      }
+
+      if(q){
+        const hay = [
+          teamObj.team,
+          teamObj.description || "",
+          ...(teamObj.items || []).map(x => x.role)
+        ].join(" ").toLowerCase();
+        if(!hay.includes(q)) return false;
+      }
+
+      return true;
+    }
+
+    function render(){
+      const f = getFilters();
+      const shown = DATA.filter(t => teamMatches(t, f));
+
+      const teamCount = shown.length;
+      const roleCount = shown.reduce((acc,t)=>acc+countRoles(t),0);
+      resultInfoEl.textContent = `${teamCount} team(s) • ${roleCount} rol(len)`;
+
+      if(teamCount === 0){
+        listEl.innerHTML = `<div class="empty">Geen resultaten. Probeer een andere zoekterm of verwijder filters.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = shown.map(teamObj => {
+        const items = [...(teamObj.items||[])].sort((a,b)=>Number(b.limit||0)-Number(a.limit||0));
+        const itemsVisible = (f.minAmount !== null)
+          ? items.filter(it => Number(it.limit||0) >= f.minAmount)
+          : items;
+
+        const max = maxLimit(teamObj);
+        const rolesN = itemsVisible.length;
+
+        const rows = itemsVisible.map(it => `
+          <tr>
+            <td class="role">${escapeHtml(it.role)}</td>
+            <td class="amount">
+              <span class="amountTag ${tagClass(it.limit)}">
+                <span class="mini"></span> ${eur(it.limit)}
+              </span>
+            </td>
+          </tr>
+        `).join("");
+
+        return `
+          <details class="team">
+            <summary>
+              <div class="teamLeft">
+                <div class="teamName">${escapeHtml(teamObj.team)}</div>
+                <div class="teamMeta">${rolesN} rol(len) • max ${eur(max)}</div>
+              </div>
+              <div class="teamRight">
+                <span class="chip">Max: <strong>${eur(max)}</strong></span>
+                <span class="chip">Rollen: <strong>${rolesN}</strong></span>
+              </div>
+            </summary>
+
+            <div class="teamInner">
+              <div class="desc">${escapeHtml(teamObj.description || "")}</div>
+              <div class="tableWrap">
+                <table>
+                  <tr>
+                    <th>Rol</th>
+                    <th>Max mandaat</th>
+                  </tr>
+                  ${rows || `<tr><td colspan="2" class="small">Geen rollen binnen huidige filter.</td></tr>`}
+                </table>
+              </div>
+            </div>
+          </details>
+        `;
+      }).join("");
+    }
+
+    function setAllDetails(open){
+      document.querySelectorAll("details.team").forEach(d => d.open = open);
+    }
+
+    // Events
+    qEl.addEventListener("input", render);
+    teamSelectEl.addEventListener("change", render);
+    minAmountEl.addEventListener("input", render);
+
+    expandAllBtn.addEventListener("click", () => setAllDetails(true));
+    collapseAllBtn.addEventListener("click", () => setAllDetails(false));
+    resetBtn.addEventListener("click", () => {
+      qEl.value = "";
+      teamSelectEl.value = "Alle teams";
+      minAmountEl.value = "";
+      render();
+    });
+
+    // Init
+    buildTeamSelect();
+    buildStats();
+    render();
+  </script>
+</body>
+</html>

@@ -314,6 +314,102 @@
       border-color: rgba(255,255,255,0.12);
     }
 
+    /* -------- Functieprofielen modal -------- */
+    .modalOverlay{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,0.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:999;
+    }
+    .modalOverlay.open{ display:flex; }
+
+    .modal{
+      width:min(1100px, 96vw);
+      max-height: 86vh;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .modalHead{
+      padding:12px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background: rgba(0,0,0,0.12);
+    }
+
+    .modalBody{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap:12px;
+      padding:12px;
+    }
+
+    .profileList{
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:auto;
+      max-height: calc(86vh - 86px);
+      background: rgba(0,0,0,0.10);
+    }
+
+    .profileItem{
+      width:100%;
+      text-align:left;
+      border:0;
+      background: transparent;
+      color: var(--text);
+      padding:12px 12px;
+      cursor:pointer;
+      border-bottom:1px solid var(--line);
+      font-weight:900;
+    }
+    .profileItem:hover{ background: rgba(255,255,255,0.04); }
+    .profileItem.active{ background: rgba(255,255,255,0.06); }
+
+    .profileDetail{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px 12px;
+      background: rgba(0,0,0,0.10);
+      overflow:auto;
+      max-height: calc(86vh - 86px);
+    }
+
+    .profileDetail h2{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+    .profileDetail ul{
+      margin:8px 0 0 18px;
+      color: var(--text);
+    }
+    .profileDetail p{ color: var(--muted); line-height:1.4; }
+    .profileMeta{
+      display:flex; gap:8px; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .profileLink{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+      text-decoration:none;
+      font-weight:900;
+      font-size:12px;
+    }
+
     @media (max-width: 1050px){
       .grid{ grid-template-columns: 1fr; }
       header{ flex-direction:column; align-items:flex-start; }
@@ -323,6 +419,7 @@
       .card{ min-height: 560px; }
       td.task{ min-width: 260px; }
       .qBox{ min-width: 260px; }
+      .modalBody{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -334,15 +431,20 @@
         <h1>RASCI & flowchart (prototype)</h1>
         <p class="sub">
           Kies <b>Ondertekenen</b> of <b>Verlengen / beëindigen</b>, selecteer een rol en zie direct waar die rol A/R/S/C/I is.
+          <li><a href="mandaat.html">Overzicht mandaat</a></li>
         </p>
       </div>
 
-      <div class="legend">
-        <span class="pill"><span class="dot a"></span> A</span>
-        <span class="pill"><span class="dot r"></span> R</span>
-        <span class="pill"><span class="dot s"></span> S</span>
-        <span class="pill"><span class="dot c"></span> C</span>
-        <span class="pill"><span class="dot i"></span> I</span>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;">
+        <button class="roleBtn" id="openProfilesBtn" style="padding:10px 14px;">Functieprofielen</button>
+
+        <div class="legend">
+          <span class="pill"><span class="dot a"></span> A</span>
+          <span class="pill"><span class="dot r"></span> R</span>
+          <span class="pill"><span class="dot s"></span> S</span>
+          <span class="pill"><span class="dot c"></span> C</span>
+          <span class="pill"><span class="dot i"></span> I</span>
+        </div>
       </div>
     </header>
 
@@ -394,6 +496,27 @@
           <div class="flowWrap">
             <div class="steps" id="steps"></div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Functieprofielen modal -->
+  <div id="profilesModal" class="modalOverlay" aria-hidden="true">
+    <div class="modal">
+      <div class="modalHead">
+        <div>
+          <div class="cardTitle">Functieprofielen</div>
+          <div class="small">Klik een rol voor uitleg (en open PDF)</div>
+        </div>
+        <button class="toggleBtn" id="closeProfilesBtn">Sluiten</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="profileList" id="profileList"></div>
+
+        <div class="profileDetail" id="profileDetail">
+          <div class="small">Selecteer links een rol.</div>
         </div>
       </div>
     </div>
@@ -467,6 +590,13 @@
   const pgYesBtn  = document.getElementById("pgYes");
   const pgNoBtn   = document.getElementById("pgNo");
 
+  // modal DOM
+  const profilesModal = document.getElementById("profilesModal");
+  const openProfilesBtn = document.getElementById("openProfilesBtn");
+  const closeProfilesBtn = document.getElementById("closeProfilesBtn");
+  const profileListEl = document.getElementById("profileList");
+  const profileDetailEl = document.getElementById("profileDetail");
+
   // --- Helpers ---------------------------------------------------
   function currentRoles(){
     const roles = [...BASE_ROLES];
@@ -479,11 +609,39 @@
     return MODELS.find(m => m.key === activeModelKey);
   }
 
-  // Expand a base rasci row (length 7) to include extra roles (each "R" for every step if enabled)
-  function expandedRasciRow(baseRow){
+  // -------- "random but stable" extra-role letters ---------------
+  function hashString(str){
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++){
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  // Weighted: mostly "", I, C. Sometimes R. Rare S. Super rare A.
+  function pickWeightedLetter(seedStr){
+    const h = hashString(seedStr) % 100; // 0..99
+    if (h < 25) return "";      // 25%
+    if (h < 50) return "I";     // 25%
+    if (h < 75) return "C";     // 25%
+    if (h < 90) return "R";     // 15%
+    if (h < 97) return "S";     // 7%
+    return "A";                 // 3%
+  }
+
+  // Expand base rasci row (length 7) to include extra roles per step
+  function expandedRasciRow(baseRow, stepIndex){
     const arr = [...baseRow];
-    if(slaYes) arr.push("R"); // test behavior
-    if(pgYes)  arr.push("R"); // test behavior
+
+    if(slaYes){
+      const seed = `${activeModelKey}|step:${stepIndex}|role:${EXTRA_ROLE_SLA}`;
+      arr.push(pickWeightedLetter(seed));
+    }
+    if(pgYes){
+      const seed = `${activeModelKey}|step:${stepIndex}|role:${EXTRA_ROLE_PG}`;
+      arr.push(pickWeightedLetter(seed));
+    }
     return arr;
   }
 
@@ -551,6 +709,7 @@
     buildRoles();
     renderTable();
     renderFlow();
+    if(profilesModal.classList.contains("open")) buildProfileList(); // keep list in sync
   }
 
   // --- Render table ---------------------------------------------
@@ -564,8 +723,8 @@
     roles.forEach(r => html += `<th>${escapeHtml(r)}</th>`);
     html += "</tr>";
 
-    model.rows.forEach(row => {
-      const fullRow = expandedRasciRow(row.rasci);
+    model.rows.forEach((row, i) => {
+      const fullRow = expandedRasciRow(row.rasci, i);
 
       html += `<tr><td class="task">${escapeHtml(row.task)}</td>`;
 
@@ -613,8 +772,7 @@
       const badge = document.createElement("div");
       badge.className = "badge";
 
-      // Expanded row includes extra R's
-      const fullRow = expandedRasciRow(row.rasci);
+      const fullRow = expandedRasciRow(row.rasci, i);
 
       badge.textContent = activeRole ? (fullRow[roleIdx] || "") : "";
 
@@ -663,6 +821,180 @@
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
   }
+
+  // --- Functieprofielen data -------------------------------------
+  // PDF links: keep PDFs in SAME folder as this HTML file, then these work:
+  // Contracteigenaar.pdf, Procesleider.pdf, Contractmanager.pdf, Inhoudsdeskundige.pdf,
+  // Beleidsadviseur-Contractmanagement.pdf, Beleidsadviseur-Inkoop.pdf, Administratief-medewerker.pdf
+  const ROLE_PROFILES = {
+    "Contracteigenaar": {
+      title: "Contracteigenaar",
+      intro: "Eindverantwoordelijk voor sturing en beheersing van het contract. Borgt dat afspraken, risico’s en budgetten aansluiten op organisatiedoelen.",
+      bullets: [
+        "Neemt/accordeert strategische besluiten rond wijzigen, verlengen of beëindigen",
+        "Bewaakt financieel kader (budget, waarde, afwijkingen)",
+        "Borgt naleving kaders (rechtmatigheid, beleid, governance)",
+        "Stuurt op samenwerking met interne en externe stakeholders"
+      ],
+      pdf: "Contracteigenaar.pdf"
+    },
+    "Procesleider": {
+      title: "Procesleider",
+      intro: "Regie op het proces (van inkoop/aanbesteding naar contractering) en zorgt voor consistente overdracht naar contractbeheer.",
+      bullets: [
+        "Coördineert processtappen en bewaakt planning/kwaliteit",
+        "Borgt dat juiste experts betrokken zijn (juridisch/inkoop/intern)",
+        "Zorgt voor overdracht van afspraken, risico’s en documentatie",
+        "Aanspreekpunt tijdens het traject"
+      ],
+      pdf: "Procesleider.pdf"
+    },
+    "Contractmanager": {
+      title: "Contractmanager",
+      intro: "Operationele regie op contracten: naleving, prestaties, risico’s en verbeteracties. Houdt overzicht en rapporteert.",
+      bullets: [
+        "Monitort prestaties en afspraken (KPI’s/SLA waar relevant)",
+        "Signaleert aflopende contracten en initieert vervolgacties",
+        "Beheert wijzigingen, risico’s en escalaties",
+        "Rapporteert periodiek aan contracteigenaar en stakeholders"
+      ],
+      pdf: "Contractmanager.pdf"
+    },
+    "Inhoudsdeskundige": {
+      title: "Inhoudsdeskundige",
+      intro: "Levert inhoudelijke expertise over het domein/levering en helpt afspraken concreet, uitvoerbaar en meetbaar te maken.",
+      bullets: [
+        "Levert input voor specificaties, prestaties en evaluatiecriteria",
+        "Ondersteunt bij inhoudelijke afstemming met leverancier",
+        "Helpt bij evaluatie van prestaties en actuele behoefte",
+        "Signaleert inhoudelijke knelpunten in de uitvoering"
+      ],
+      pdf: "Inhoudsdeskundige.pdf"
+    },
+    "Beleidsadviseur contractmanagement": {
+      title: "Beleidsadviseur contractmanagement",
+      intro: "Ontwikkelt/onderhoudt kaders en werkwijzen voor contractmanagement en adviseert bij lastige contract- en governancevragen.",
+      bullets: [
+        "Beleid/standaarden en templates voor contractmanagement",
+        "Advies bij inrichting van rollen, eigenaarschap en beheersing",
+        "Ondersteunt bij audits, kwaliteitsborging en verbetertrajecten",
+        "Faciliteert training/kennisdeling"
+      ],
+      pdf: "Beleidsadviseur-Contractmanagement.pdf"
+    },
+    "Beleidsadviseur inkoop": {
+      title: "Beleidsadviseur inkoop",
+      intro: "Adviseert over inkoop/aanbesteden en borgt rechtmatigheid, procedurekeuze en marktbenadering.",
+      bullets: [
+        "Advies over procedure, strategie en aanbestedingskaders",
+        "Begeleidt het proces en bewaakt compliance",
+        "Ondersteunt bij contractvorming en leveranciersafspraken",
+        "Draagt bij aan optimalisatie van inkoopprocessen"
+      ],
+      pdf: "Beleidsadviseur-Inkoop.pdf"
+    },
+    "Administratief medewerker": {
+      title: "Administratief medewerker",
+      intro: "Zorgt dat contractdata klopt en vindbaar is. Registreert, archiveert en signaleert deadlines/aflopende contracten.",
+      bullets: [
+        "Archivering en registratie in het contractmanagementsysteem",
+        "Signaleert termijnen en incomplete dossiervorming",
+        "Ondersteunt bij standaarddocumenten en administratieve checks",
+        "Houdt overzicht van basiscontractgegevens"
+      ],
+      pdf: "Administratief-medewerker.pdf"
+    },
+
+    // Extra roles (geen PDF nodig)
+    "IT-adviseur": {
+      title: "IT-adviseur",
+      intro: "Wordt betrokken zodra er een SLA of IT-afhankelijkheden zijn. Denkt mee over meetbaarheid, beheer en technische risico’s.",
+      bullets: [
+        "Checkt of SLA/KPI’s technisch meetbaar en realistisch zijn",
+        "Adviseert over monitoring/rapportage en beheerafspraken",
+        "Signaleert IT-risico’s (continuïteit, security, afhankelijkheden)"
+      ],
+      pdf: null
+    },
+    "Privacy Officer": {
+      title: "Privacy Officer",
+      intro: "Wordt betrokken wanneer er persoonsgegevens in scope zijn. Borgt AVG-compliance en adviseert over risico’s en beheersmaatregelen.",
+      bullets: [
+        "Checkt AVG-aspecten (grondslag, verwerkersrol, DPIA waar nodig)",
+        "Adviseert over bewaartermijnen, toegangsbeheer, dataminimalisatie",
+        "Signaleert privacy-risico’s en benodigde maatregelen"
+      ],
+      pdf: null
+    }
+  };
+
+  // --- Functieprofielen modal logic ------------------------------
+  let activeProfile = null;
+
+  function openProfiles(){
+    buildProfileList();
+    profilesModal.classList.add("open");
+    profilesModal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeProfiles(){
+    profilesModal.classList.remove("open");
+    profilesModal.setAttribute("aria-hidden", "true");
+  }
+
+  function buildProfileList(){
+    const roles = currentRoles();
+    profileListEl.innerHTML = "";
+
+    roles.forEach(roleName => {
+      const btn = document.createElement("button");
+      btn.className = "profileItem" + (roleName === activeProfile ? " active" : "");
+      btn.textContent = roleName;
+      btn.addEventListener("click", () => {
+        activeProfile = roleName;
+        buildProfileList();
+        renderProfileDetail(roleName);
+      });
+      profileListEl.appendChild(btn);
+    });
+
+    if(!activeProfile || !roles.includes(activeProfile)){
+      activeProfile = roles[0] || null;
+      if(activeProfile) renderProfileDetail(activeProfile);
+    }
+  }
+
+  function renderProfileDetail(roleName){
+    const p = ROLE_PROFILES[roleName] || {
+      title: roleName,
+      intro: "Nog geen toelichting beschikbaar.",
+      bullets: [],
+      pdf: null
+    };
+
+    const bullets = (p.bullets || []).map(x => `<li>${escapeHtml(x)}</li>`).join("");
+    const pdfLink = p.pdf
+      ? `<a class="profileLink" href="${escapeHtml(p.pdf)}" target="_blank" rel="noopener">Open PDF</a>`
+      : `<span class="small">Geen PDF beschikbaar</span>`;
+
+    profileDetailEl.innerHTML = `
+      <h2>${escapeHtml(p.title)}</h2>
+      <p>${escapeHtml(p.intro || "")}</p>
+      ${bullets ? `<ul>${bullets}</ul>` : ""}
+      <div class="profileMeta">${pdfLink}</div>
+    `;
+  }
+
+  openProfilesBtn.addEventListener("click", openProfiles);
+  closeProfilesBtn.addEventListener("click", closeProfiles);
+
+  profilesModal.addEventListener("click", (e) => {
+    if(e.target === profilesModal) closeProfiles();
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if(e.key === "Escape" && profilesModal.classList.contains("open")) closeProfiles();
+  });
 
   // --- Toggle logic (forced yes/no) ------------------------------
   slaYesBtn.addEventListener("click", () => {
